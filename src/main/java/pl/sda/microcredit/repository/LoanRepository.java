@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import pl.sda.microcredit.model.LoanEntity;
 
 @Repository
-public interface CreditRepository extends JpaRepository<LoanEntity, Long> {
+public interface LoanRepository extends JpaRepository<LoanEntity, Long> {
 
 }
