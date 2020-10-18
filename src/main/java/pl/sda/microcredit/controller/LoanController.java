@@ -24,7 +24,7 @@ public class LoanController {
                 .build();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/extend/{id}")
     public ResponseEntity<Void> applyForLoan(@PathVariable(value = "id") Long loanId) {
         loanService.extendTermLoan(loanId);
         return ResponseEntity

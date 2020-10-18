@@ -1,6 +1,7 @@
 package pl.sda.microcredit.service;
 
 import org.springframework.stereotype.Service;
+import pl.sda.microcredit.exception.LoanAlreadyExtendedException;
 import pl.sda.microcredit.exception.LoanNotExistsException;
 import pl.sda.microcredit.exception.LoanOutOfLimitException;
 import pl.sda.microcredit.exception.LoanOutOfTermException;
@@ -18,6 +19,7 @@ public class LoanService {
     public static final String LOAN_OUT_OF_LIMIT = "Loan is out of limit";
     public static final String LOAN_OUT_OF_TERM = "Loan is out of term";
     public static final String LOAN_NOT_EXISTS = "Loan for given id doesnt exists";
+    public static final String LOAN_ALREADY_EXTENDED = "Loan already extended";
     private final LoanRepository loanRepository;
     private final LoanProperties loanProperties;
 
@@ -52,7 +54,16 @@ public class LoanService {
 
     public void extendTermLoan(Long id) {
         LoanEntity loan = loanRepository.findById(id).orElseThrow(() -> new LoanNotExistsException(LOAN_NOT_EXISTS));
-        loan.extend(loanProperties.getExtendMonth());
+        Long extendMonth = loanProperties.getExtendMonth();
+        assertLoanNoExtendYet(loan.toView().getExtendTerm());
+        loan.extend(extendMonth);
+        loanRepository.save(loan);
+    }
+
+    private void assertLoanNoExtendYet(Long extendMonth) {
+        if (extendMonth != null) {
+            throw new LoanAlreadyExtendedException(LOAN_ALREADY_EXTENDED);
+        }
     }
 
     private void assertLoanIsInLimitAmount(LoanRequest loan) {
@@ -67,6 +78,10 @@ public class LoanService {
         if (period.compareTo(loanProperties.getMinTermMonth()) == -1 || period.compareTo(loanProperties.getMaxTermMonth()) == 1) {
             throw new LoanOutOfTermException(LOAN_OUT_OF_TERM);
         }
+    }
+
+    private void assertLoanInNightWithNoMaxAmount (LoanRequest loan){
+        //to develop
     }
 
 }

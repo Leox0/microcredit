@@ -42,7 +42,11 @@ public class LoanEntity {
     private LocalDate createDate;
 
     public void extend(Long extendTerm) {
-        this.extendTerm = extendTerm;
+        if (this.extendTerm == null) {
+            this.extendTerm = extendTerm;
+        } else {
+            this.extendTerm += extendTerm;
+        }
         this.endDate = this.endDate.plusMonths(extendTerm);
     }
 
