@@ -1,33 +1,33 @@
 package pl.sda.microcredit.config;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
-@Configuration
-@ConfigurationProperties(prefix = "properties")
+@NoArgsConstructor
+@Component
 @Getter
 public class LoanProperties {
 
-    @Value("${maxAmount}")
+    @Value("${properties.maxAmount}")
     private BigDecimal maxAmount;
 
-    @Value("${minAmount}")
+    @Value("${properties.minAmount}")
     private BigDecimal minAmount;
 
-    @Value("${maxTermMonth}")
+    @Value("${properties.maxTermMonth}")
     private Long maxTermMonth;
 
-    @Value("${minTermMonth}")
+    @Value("${properties.minTermMonth}")
     private Long minTermMonth;
 
-    @Value("${extendMonth}")
+    @Value("${properties.extendMonth}")
     private Long extendMonth;
 
-    @Value("${interest}")
+    @Value("${properties.interest}")
     private Long interest;
 
 }
