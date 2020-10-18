@@ -41,12 +41,12 @@ public class LoanEntity {
     @NotNull
     private LocalDate createDate;
 
-/*    public void extend(Long extendTerm) {
+    public void extend(Long extendTerm) {
         this.extendTerm = extendTerm;
         this.endDate = this.endDate.plusMonths(extendTerm);
-    }*/
+    }
 
-/*    public LoanView toView() {
+    public LoanView toView() {
         return LoanView.builder()
                 .amount(amount)
                 .amountInterest(amountInterest)
@@ -56,6 +56,6 @@ public class LoanEntity {
                 .period(period)
                 .createDate(createDate)
                 .build();
-    }*/
+    }
 
 }

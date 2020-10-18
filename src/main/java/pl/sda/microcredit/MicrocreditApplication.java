@@ -9,8 +9,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties(LoanProperties.class)
 public class MicrocreditApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MicrocreditApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MicrocreditApplication.class, args);
+    }
 
 }

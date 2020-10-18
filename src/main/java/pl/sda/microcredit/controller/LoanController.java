@@ -16,20 +16,20 @@ public class LoanController {
         this.loanService = loanService;
     }
 
-//    @PostMapping
-//    public ResponseEntity<Void> applyForLoan(@RequestBody LoanRequest loanRequest) {
-//        loanService.applyForLoan(loanRequest);
-//        return ResponseEntity
-//                .status(HttpStatus.CREATED)
-//                .build();
-//    }
+    @PostMapping
+    public ResponseEntity<Void> applyForLoan(@RequestBody LoanRequest loanRequest) {
+        loanService.applyForLoan(loanRequest);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .build();
+    }
 
-/*    @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Void> applyForLoan(@PathVariable(value = "id") Long loanId) {
         loanService.extendTermLoan(loanId);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
-    }*/
+    }
 
 }
