@@ -1,12 +1,12 @@
 package pl.sda.microcredit.service;
 
-import config.LoanProperties;
 import org.springframework.stereotype.Service;
 import pl.sda.microcredit.exception.LoanNotExistsException;
 import pl.sda.microcredit.exception.LoanOutOfLimitException;
 import pl.sda.microcredit.exception.LoanOutOfTermException;
 import pl.sda.microcredit.model.LoanEntity;
 import pl.sda.microcredit.model.LoanRequest;
+import pl.sda.microcredit.config.LoanProperties;
 import pl.sda.microcredit.repository.LoanRepository;
 
 import java.math.BigDecimal;
