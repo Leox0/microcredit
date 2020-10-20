@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 
 @NoArgsConstructor
 @Component
-@Getter
 public class LoanProperties {
 
     @Value("${properties.maxAmount}")
@@ -30,4 +30,41 @@ public class LoanProperties {
     @Value("${properties.interest}")
     private Long interest;
 
+    @Value("${properties.startNight}")
+    private int startNight;
+
+    @Value("${properties.endNight}")
+    private int endNight;
+
+    public BigDecimal getMaxAmount() {
+        return maxAmount;
+    }
+
+    public BigDecimal getMinAmount() {
+        return minAmount;
+    }
+
+    public Long getMaxTermMonth() {
+        return maxTermMonth;
+    }
+
+    public Long getMinTermMonth() {
+        return minTermMonth;
+    }
+
+    public Long getExtendMonth() {
+        return extendMonth;
+    }
+
+    public Long getInterest() {
+        return interest;
+    }
+
+    public LocalTime getStartNight(){
+        return LocalTime.of(startNight,00,00);
+    }
+
+    public LocalTime getEndNight(){
+        return LocalTime.of(endNight,00,00);
+    }
 }

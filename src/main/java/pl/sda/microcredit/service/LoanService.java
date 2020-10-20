@@ -1,10 +1,7 @@
 package pl.sda.microcredit.service;
 
 import org.springframework.stereotype.Service;
-import pl.sda.microcredit.exception.LoanAlreadyExtendedException;
-import pl.sda.microcredit.exception.LoanNotExistsException;
-import pl.sda.microcredit.exception.LoanOutOfLimitException;
-import pl.sda.microcredit.exception.LoanOutOfTermException;
+import pl.sda.microcredit.exception.*;
 import pl.sda.microcredit.model.LoanEntity;
 import pl.sda.microcredit.model.LoanRequest;
 import pl.sda.microcredit.config.LoanProperties;
@@ -12,6 +9,7 @@ import pl.sda.microcredit.repository.LoanRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Service
 public class LoanService {
@@ -20,6 +18,7 @@ public class LoanService {
     public static final String LOAN_OUT_OF_TERM = "Loan is out of term";
     public static final String LOAN_NOT_EXISTS = "Loan for given id doesnt exists";
     public static final String LOAN_ALREADY_EXTENDED = "Loan already extended";
+    public static final String MAX_AMOUNT_IN_NIGHT_IS_NOT_ALLOWED = "Loan with max amount in night is not allowed";
     private final LoanRepository loanRepository;
     private final LoanProperties loanProperties;
 
@@ -31,6 +30,7 @@ public class LoanService {
     public void applyForLoan(LoanRequest loan) {
         assertLoanIsInTerm(loan);
         assertLoanIsInLimitAmount(loan);
+        assertLoanInNightWithNoMaxAmount(loan);
         LoanEntity loanEntity = buildWith(loan);
         loanRepository.save(loanEntity);
     }
@@ -80,8 +80,12 @@ public class LoanService {
         }
     }
 
-    private void assertLoanInNightWithNoMaxAmount (LoanRequest loan){
-        //to develop
+    private void assertLoanInNightWithNoMaxAmount(LoanRequest loan) {
+        if (LocalTime.now().isAfter(loanProperties.getStartNight())
+                && LocalTime.now().isBefore(loanProperties.getEndNight())
+                && loan.getAmount().compareTo(loanProperties.getMaxAmount()) == 0) {
+            throw new LoanMaxAmountInNightException(MAX_AMOUNT_IN_NIGHT_IS_NOT_ALLOWED);
+        }
     }
 
 }
