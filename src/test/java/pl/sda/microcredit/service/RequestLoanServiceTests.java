@@ -64,7 +64,7 @@ public class RequestLoanServiceTests {
     }
 
     @Test
-    public void shouldThrowExceptionWhenRequestLoanAmountIsToHigh() {
+    public void shouldThrowExceptionWhenLoanRequestAmountIsToHigh() {
         //given
         BigDecimal amount = loanProperties.getMaxAmount().add(BigDecimal.valueOf(1));
         LocalDate startDate = LocalDate.now();
@@ -80,7 +80,7 @@ public class RequestLoanServiceTests {
     }
 
     @Test
-    public void shouldThrowExceptionWhenRequestLoanAmountIsToLow() {
+    public void shouldThrowExceptionWhenLoanRequestAmountIsToLow() {
         //given
         BigDecimal amount = loanProperties.getMinAmount().subtract(BigDecimal.valueOf(1));
         LocalDate startDate = LocalDate.now();
@@ -96,7 +96,7 @@ public class RequestLoanServiceTests {
     }
 
     @Test
-    public void shouldThrowExceptionWhenRequestLoanTermIsToLong() {
+    public void shouldThrowExceptionWhenLoanRequestTermIsToLong() {
         //given
         BigDecimal amount = loanProperties.getMaxAmount().subtract(BigDecimal.valueOf(1));
         LocalDate startDate = LocalDate.now();
@@ -112,7 +112,7 @@ public class RequestLoanServiceTests {
     }
 
     @Test
-    public void shouldThrowExceptionWhenRequestLoanTermIsToShort() {
+    public void shouldThrowExceptionWhenLoanRequestTermIsToShort() {
         //given
         BigDecimal amount = loanProperties.getMaxAmount().subtract(BigDecimal.valueOf(1));
         LocalDate startDate = LocalDate.now();
@@ -129,7 +129,7 @@ public class RequestLoanServiceTests {
 
     //pass only in night
     @Test
-    public void shouldThrowExceptionWhenRequestLoanInNightWithMaxAmount(){
+    public void shouldThrowExceptionWhenLoanRequestInNightWithMaxAmount(){
         //given
         BigDecimal amount = loanProperties.getMaxAmount();
         LocalDate startDate = LocalDate.now();

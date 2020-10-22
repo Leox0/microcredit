@@ -89,7 +89,7 @@ public class ExtendLoanServiceTests {
     }
 
     @Test
-    public void shouldThrowExceptionWhenExtendLoanWithDoesntExist() {
+    public void shouldThrowExceptionWhenExtendLoanDoesntExist() {
         //given
 
         //when
