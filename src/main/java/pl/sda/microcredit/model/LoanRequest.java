@@ -1,12 +1,14 @@
 package pl.sda.microcredit.model;
 
 import com.sun.istack.NotNull;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Getter
+@Data
+@AllArgsConstructor
 public class LoanRequest {
 
     @NotNull

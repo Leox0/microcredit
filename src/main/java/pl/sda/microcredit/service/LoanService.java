@@ -27,7 +27,7 @@ public class LoanService {
         this.loanProperties = loanProperties;
     }
 
-    public void applyForLoan(LoanRequest loan) {
+    public void applyForLoan(LoanRequest loan) throws GenericLoanException {
         assertLoanIsInTerm(loan);
         assertLoanIsInLimitAmount(loan);
         assertLoanInNightWithNoMaxAmount(loan);
@@ -52,7 +52,7 @@ public class LoanService {
                 .divide(BigDecimal.valueOf(100));
     }
 
-    public void extendTermLoan(Long id) {
+    public void extendTermLoan(Long id) throws LoanNotExistsException, LoanAlreadyExtendedException {
         LoanEntity loan = loanRepository.findById(id).orElseThrow(() -> new LoanNotExistsException(LOAN_NOT_EXISTS));
         Long extendMonth = loanProperties.getExtendMonth();
         assertLoanNoExtendYet(loan.toView().getExtendTerm());
@@ -60,27 +60,27 @@ public class LoanService {
         loanRepository.save(loan);
     }
 
-    private void assertLoanNoExtendYet(Long extendMonth) {
+    private void assertLoanNoExtendYet(Long extendMonth) throws LoanAlreadyExtendedException {
         if (extendMonth != null) {
             throw new LoanAlreadyExtendedException(LOAN_ALREADY_EXTENDED);
         }
     }
 
-    private void assertLoanIsInLimitAmount(LoanRequest loan) {
+    private void assertLoanIsInLimitAmount(LoanRequest loan) throws LoanOutOfLimitException {
         BigDecimal amount = loan.getAmount();
         if (amount.compareTo(loanProperties.getMinAmount()) == -1 || amount.compareTo(loanProperties.getMaxAmount()) == 1) {
             throw new LoanOutOfLimitException(LOAN_OUT_OF_LIMIT);
         }
     }
 
-    private void assertLoanIsInTerm(LoanRequest loan) {
+    private void assertLoanIsInTerm(LoanRequest loan) throws LoanOutOfTermException {
         Long period = loan.getPeriod();
         if (period.compareTo(loanProperties.getMinTermMonth()) == -1 || period.compareTo(loanProperties.getMaxTermMonth()) == 1) {
             throw new LoanOutOfTermException(LOAN_OUT_OF_TERM);
         }
     }
 
-    private void assertLoanInNightWithNoMaxAmount(LoanRequest loan) {
+    private void assertLoanInNightWithNoMaxAmount(LoanRequest loan) throws LoanMaxAmountInNightException {
         if (LocalTime.now().isAfter(loanProperties.getStartNight())
                 && LocalTime.now().isBefore(loanProperties.getEndNight())
                 && loan.getAmount().compareTo(loanProperties.getMaxAmount()) == 0) {

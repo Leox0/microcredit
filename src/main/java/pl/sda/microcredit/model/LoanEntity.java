@@ -52,6 +52,7 @@ public class LoanEntity {
 
     public LoanView toView() {
         return LoanView.builder()
+                .id(id)
                 .amount(amount)
                 .amountInterest(amountInterest)
                 .startDate(startDate)

@@ -12,6 +12,8 @@ import java.time.LocalDate;
 @Getter
 public class LoanView {
 
+    private Long id;
+
     private BigDecimal amount;
 
     private BigDecimal amountInterest;
